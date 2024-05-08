@@ -1,0 +1,23 @@
+---
+- name: Execute Python file from Git repository and delete afterwards
+  hosts: servers
+  tasks:
+    - name: Clone Git repository
+      git:
+        repo: https://github.com/pranav1st/Ansible-Automation.git
+        dest: /tmp/execution_repo
+        clone: yes
+
+    - name: Execute Python file
+      command: python3 /tmp/execution_repo/main.py
+      register: execution_output
+      become: yes
+      args:
+        chdir: /tmp/execution_repo
+      ignore_errors: yes
+      
+    - name: Remove cloned repository
+      file:
+        path: /tmp/execution_repo
+        state: absent
+      become: yes
