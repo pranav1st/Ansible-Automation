@@ -1,6 +1,6 @@
 import os
 
-content = "Hello World"
+content = "Hello World!"
 file_path = "/home/ubuntu/Desktop/hello.txt"
 
 try:
