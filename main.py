@@ -13,3 +13,4 @@ except PermissionError:
     print("Error: Permission denied to write to '/home/ubuntu/Desktop'.")
 except Exception as e:
     print("An error occurred:", e)
+
