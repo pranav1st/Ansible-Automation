@@ -249,7 +249,7 @@ def del_from_repo(file_path):
 
     commit_message = "Remove file from repository"
 
-    access_token = "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"
+    access_token = "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"
 
     remove_file_from_repository(owner, repo, file_path, commit_message, access_token)
 
@@ -257,7 +257,7 @@ def del_from_repo(file_path):
 owner = "pranav1st"
 repo = "Ansible-automation"
 
-access_token = "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"
+access_token = "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"
 
 playbooks = fetch_from_templates()
 
