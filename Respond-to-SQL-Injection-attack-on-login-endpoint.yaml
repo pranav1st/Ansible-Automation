@@ -1,0 +1,13 @@
+---
+---
+- name: Respond to SQL Injection attack on login endpoint
+  hosts: web_servers
+  tasks:
+    - name: Block IP address 192.155.88.231 at the firewall
+      command: "firewall-cmd --zone=public --add-rich-rule='rule family=ipv4 source address=192.155.88.231 reject'"
+    - name: Investigate the compromised endpoint
+      command: "ssh admin@192.155.88.231 'grep -r \"' UNION SELECT email, password, NULL, NULL, NULL FROM user --\" /var/log/nginx/access.log'"
+    - name: Disable the vulnerable login endpoint
+      command: "ssh admin@192.155.88.231 'mv /var/www/html/login.php /var/www/html/login_disabled.php'"
+    - name: Notify security team about the incident
+      command: "mail -s 'Security Incident: SQL Injection attack detected' security@example.com < /var/log/nginx/access.log"
