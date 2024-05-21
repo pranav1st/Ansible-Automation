@@ -122,7 +122,7 @@ def fetch_from_templates():
         "Sec-Fetch-Site": "same-origin"
     }
 
-    response = requests.get(url, headers=headers, verify=False)
+    response = requests.get(url, headers=headers)
 
     if response.status_code == 200:
         # Extract the "name" values from the response JSON
@@ -134,7 +134,7 @@ def fetch_from_templates():
         return []
 
 def get_yaml_files_from_repo(owner, repo, access_token):
-    access_token = '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'
+    access_token = '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'
     owner = 'pranav1st'
     repo = 'Ansible-automation'
     url = f"https://api.github.com/repos/{owner}/{repo}/contents"
@@ -208,7 +208,7 @@ def del_from_repo(file_path):
 
     commit_message = "Remove file from repository"
 
-    access_token = "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"
+    access_token = "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"
 
     remove_file_from_repository(owner, repo, file_path, commit_message, access_token)
 
@@ -216,7 +216,7 @@ def del_from_repo(file_path):
 owner = "pranav1st"
 repo = "Ansible-automation"
 
-access_token = "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"
+access_token = "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"
 
 playbooks = fetch_from_templates()
 
