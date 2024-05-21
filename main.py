@@ -2,47 +2,6 @@ import requests
 import json
 import os
 
-# def playbook_to_template(playbook):
-#     # Define the URL and payload
-#     url = 'http://localhost:3000/api/project/1/templates'
-#     payload = {
-#         "type": "",
-#         "name": playbook,
-#         "description": '',
-#         "playbook": playbook+".yaml",
-#         "inventory_id": 9,
-#         "repository_id": 1,
-#         "environment_id": 1,
-#         "vault_key_id": None,
-#         "project_id": 1
-#     }
-
-#     # Define headers
-#     headers = {
-#         "User-Agent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:125.0) Gecko/20100101 Firefox/125.0",
-#         "Accept": "application/json, text/plain, */*",
-#         "Accept-Language": "en-US,en;q=0.5",
-#         "Accept-Encoding": "gzip, deflate, br",
-#         "Content-Type": "application/json",
-#         "Origin": "http://localhost:3000",
-#         "Connection": "keep-alive",
-#         "Referer": "http://localhost:3000/project/1/templates",
-#         "Cookie": "semaphore=MTcxNTA3MTA3OHw1Ym9ueXRzTUY3ZXotMHNka19UMlRSTEc0UzVsQWVsVXBOSml2aWVxSGo0QmtVSUZvWXB3M1VDMS1GeEptQ2c4MHNETGQyYjNxWlA5T3ZQWkJqLXJKQT09fEXTmskmaNBswP5mIzNwOot-n0RpCnT1uGM3QJCysGkw",
-#         "Sec-Fetch-Dest": "empty",
-#         "Sec-Fetch-Mode": "cors",
-#         "Sec-Fetch-Site": "same-origin"
-#     }
-
-#     # Convert payload to JSON
-#     payload_json = json.dumps(payload)
-
-#     # Send the POST request
-#     response = requests.post(url, data=payload_json, headers=headers)
-
-#     # Print response
-#     print("Response status code:", response.status_code)
-#     print("Response content:", response.text)
-
 def playbook_to_template(playbook, owner, repo, access_token):
     # Define the URL for the GitHub repository contents endpoint
     url_repo = f"https://api.github.com/repos/{owner}/{repo}/contents/{playbook}.yaml"
@@ -63,36 +22,32 @@ def playbook_to_template(playbook, owner, repo, access_token):
             f.write(response_repo.content)
 
         # Define the URL for the Semaphore API endpoint
-        url_api_template = 'http://localhost:3000/api/project/1/templates'
+        url_api_template = 'http://localhost:3000/api/project/2/templates'
 
-        # Define the payload to add the playbook to the template
         payload_template = {
             "type": "",
             "name": playbook,
-            "description": '',
-            "playbook": playbook + ".yaml",
-            "inventory_id": 9,
+            "playbook": playbook+".yaml",
+            "inventory_id": 2,
             "repository_id": 1,
             "environment_id": 1,
-            "vault_key_id": None,
-            "project_id": 1
+            "project_id": 2
         }
 
         # Define headers for the POST request to add playbook to template
         headers_api_template = {
-            "User-Agent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:125.0) Gecko/20100101 Firefox/125.0",
+            "User-Agent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:75.0) Gecko/20100101 Firefox/75.0",
             "Accept": "application/json, text/plain, */*",
             "Accept-Language": "en-US,en;q=0.5",
-            "Accept-Encoding": "gzip, deflate, br",
+            "Accept-Encoding": "gzip, deflate",
             "Content-Type": "application/json",
             "Origin": "http://localhost:3000",
             "Connection": "keep-alive",
-            "Referer": "http://localhost:3000/project/1/templates",
-            "Cookie": "semaphore=MTcxNTA3MTA3OHw1Ym9ueXRzTUY3ZXotMHNka19UMlRSTEc0UzVsQWVsVXBOSml2aWVxSGo0QmtVSUZvWXB3M1VDMS1GeEptQ2c4MHNETGQyYjNxWlA5T3ZQWkJqLXJKQT09fEXTmskmaNBswP5mIzNwOot-n0RpCnT1uGM3QJCysGkw",
-            "Sec-Fetch-Dest": "empty",
-            "Sec-Fetch-Mode": "cors",
-            "Sec-Fetch-Site": "same-origin"
+            "Referer": "http://localhost:3000/project/2/templates",
+            "Cookie": "semaphore=MTcxNjI1NDI4NnxKVmotUy0yelpPM2tNYlBnbThzSVQwa0w2a2FOcWdJblFBS0ZVNVZza2N2MS0ycVBsN0I3S3BRS0M0d2dva2RQTHJPWmltNDZCRm15ejN3N2dCcmNGdz09fPnKaweC77nd6N0TB1_hS1yMJ0m3iF33W_e4K6DlWKlw"
         }
+
+
 
         # Send a POST request to add the playbook to the template
         response_api_template = requests.post(url_api_template, json=payload_template, headers=headers_api_template)
@@ -106,26 +61,26 @@ def playbook_to_template(playbook, owner, repo, access_token):
         template_id = response_api_template.json()["id"]
 
         # Define the URL for the Semaphore API endpoint to add tasks
-        url_api_tasks = 'http://localhost:3000/api/project/1/tasks'
+        url_api_tasks = 'http://localhost:3000/api/project/2/tasks'
 
         # Define the payload to add tasks
         payload_tasks = {
             "template_id": template_id,
             "environment": "{}",
-            "project_id": 1
+            "project_id": 2
         }
 
         # Define headers for the POST request to add tasks
         headers_api_tasks = {
-            "User-Agent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:125.0) Gecko/20100101 Firefox/125.0",
+            "User-Agent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:75.0) Gecko/20100101 Firefox/75.0",
             "Accept": "application/json, text/plain, */*",
             "Accept-Language": "en-US,en;q=0.5",
-            "Accept-Encoding": "gzip, deflate, br",
+            "Accept-Encoding": "gzip, deflate",
             "Content-Type": "application/json",
             "Origin": "http://localhost:3000",
             "Connection": "keep-alive",
-            "Referer": f"http://localhost:3000/project/1/templates/{template_id}",
-            "Cookie": "semaphore=MTcxNTA3MTA3OHw1Ym9ueXRzTUY3ZXotMHNka19UMlRSTEc0UzVsQWVsVXBOSml2aWVxSGo0QmtVSUZvWXB3M1VDMS1GeEptQ2c4MHNETGQyYjNxWlA5T3ZQWkJqLXJKQT09fEXTmskmaNBswP5mIzNwOot-n0RpCnT1uGM3QJCysGkw",
+            "Referer": f"http://localhost:3000/project/2/templates/{template_id}",
+            "Cookie": "semaphore=MTcxNjI1NDI4NnxKVmotUy0yelpPM2tNYlBnbThzSVQwa0w2a2FOcWdJblFBS0ZVNVZza2N2MS0ycVBsN0I3S3BRS0M0d2dva2RQTHJPWmltNDZCRm15ejN3N2dCcmNGdz09fPnKaweC77nd6N0TB1_hS1yMJ0m3iF33W_e4K6DlWKlw",
             "Sec-Fetch-Dest": "empty",
             "Sec-Fetch-Mode": "cors",
             "Sec-Fetch-Site": "same-origin"
@@ -152,16 +107,16 @@ def playbook_to_template(playbook, owner, repo, access_token):
 
 
 def fetch_from_templates():
-    url = 'http://localhost:3000/api/project/1/templates'
+    url = 'http://localhost:3000/api/project/2/templates'
 
     headers = {
-        "User-Agent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:125.0) Gecko/20100101 Firefox/125.0",
+        "User-Agent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:75.0) Gecko/20100101 Firefox/75.0",
         "Accept": "application/json, text/plain, */*",
         "Accept-Language": "en-US,en;q=0.5",
-        "Accept-Encoding": "gzip, deflate, br",
+        "Accept-Encoding": "gzip, deflate",
         "Connection": "keep-alive",
-        "Referer": "http://localhost:3000/project/1/templates",
-        "Cookie": "semaphore=MTcxNTA3MTA3OHw1Ym9ueXRzTUY3ZXotMHNka19UMlRSTEc0UzVsQWVsVXBOSml2aWVxSGo0QmtVSUZvWXB3M1VDMS1GeEptQ2c4MHNETGQyYjNxWlA5T3ZQWkJqLXJKQT09fEXTmskmaNBswP5mIzNwOot-n0RpCnT1uGM3QJCysGkw",
+        "Referer": "http://localhost:3000/project/2/templates",
+        "Cookie": "semaphore=MTcxNjI1NDI4NnxKVmotUy0yelpPM2tNYlBnbThzSVQwa0w2a2FOcWdJblFBS0ZVNVZza2N2MS0ycVBsN0I3S3BRS0M0d2dva2RQTHJPWmltNDZCRm15ejN3N2dCcmNGdz09fPnKaweC77nd6N0TB1_hS1yMJ0m3iF33W_e4K6DlWKlw",
         "Sec-Fetch-Dest": "empty",
         "Sec-Fetch-Mode": "cors",
         "Sec-Fetch-Site": "same-origin"
@@ -171,13 +126,17 @@ def fetch_from_templates():
 
     if response.status_code == 200:
         # Extract the "name" values from the response JSON
+        print("Templates: Success")
         names = [template["name"] for template in response.json()]
         return names
     else:
-        print("Failed to get response. Status code:", response.status_code)
+        print("Templates: Failed to get response. Status code:", response.status_code)
         return []
 
 def get_yaml_files_from_repo(owner, repo, access_token):
+    access_token = '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'
+    owner = 'pranav1st'
+    repo = 'Ansible-automation'
     url = f"https://api.github.com/repos/{owner}/{repo}/contents"
 
     headers = {
@@ -249,7 +208,7 @@ def del_from_repo(file_path):
 
     commit_message = "Remove file from repository"
 
-    access_token = "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"
+    access_token = "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"
 
     remove_file_from_repository(owner, repo, file_path, commit_message, access_token)
 
@@ -257,7 +216,7 @@ def del_from_repo(file_path):
 owner = "pranav1st"
 repo = "Ansible-automation"
 
-access_token = "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"
+access_token = "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"
 
 playbooks = fetch_from_templates()
 
