@@ -122,7 +122,7 @@ def fetch_from_templates():
         "Sec-Fetch-Site": "same-origin"
     }
 
-    response = requests.get(url, headers=headers)
+    response = requests.get(url, headers=headers, verify=False)
 
     if response.status_code == 200:
         # Extract the "name" values from the response JSON
