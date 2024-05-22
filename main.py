@@ -134,7 +134,7 @@ def fetch_from_templates():
         return []
 
 def get_yaml_files_from_repo(owner, repo, access_token):
-    access_token = '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'
+    access_token = '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'
     owner = 'pranav1st'
     repo = 'Ansible-automation'
     url = f"https://api.github.com/repos/{owner}/{repo}/contents"
@@ -208,7 +208,7 @@ def del_from_repo(file_path):
 
     commit_message = "Remove file from repository"
 
-    access_token = "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"
+    access_token = "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"
 
     remove_file_from_repository(owner, repo, file_path, commit_message, access_token)
 
@@ -216,7 +216,7 @@ def del_from_repo(file_path):
 owner = "pranav1st"
 repo = "Ansible-automation"
 
-access_token = "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"
+access_token = "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"
 
 playbooks = fetch_from_templates()
 
