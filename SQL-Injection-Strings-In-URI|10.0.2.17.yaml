@@ -1,16 +1,13 @@
----
----
-- name: SQL Injection Strings In URI Attack Response | 10.0.2.17
+
+- name: SQL-Injection-Strings-In-URI|10.0.2.17
   hosts: servers
   become: yes
   tasks:
-    - name: Remove SQL Injection Strings from URI
-      blockinfile:
-        path: /path/to/your/web/application
-        block: |
-          location / {
-              # Add your web application configuration here
-              # Remove any SQL injection strings from the URI
-          }
-      become: yes
-```
+    - name: Block requests with SQL injection strings in URI
+      uri:
+        url: "http://example.com/api{{ item }}"
+        method: GET
+        status_code: 403
+      with_items:
+        - "/users?id=1'; DROP TABLE users;"
+        - "/products?category=electronics'; DELETE FROM products;"
