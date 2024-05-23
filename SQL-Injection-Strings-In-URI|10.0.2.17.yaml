@@ -1,0 +1,18 @@
+---
+  - name: Mitigate SQL Injection Attack from 10.0.2.17
+    hosts: servers
+    become: yes
+    tasks:
+      - name: Update web application configuration to prevent SQL injection
+        blockinfile:
+          path: /path/to/web/application/config.ini
+          block: |
+            [sql_injection]
+            enabled = false
+        notify: Restart Web Application
+    handlers:
+      - name: Restart Web Application
+        service:
+        - name: web_application
+          state: restarted
+  
