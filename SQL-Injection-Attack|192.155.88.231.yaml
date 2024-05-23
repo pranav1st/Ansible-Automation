@@ -11,6 +11,3 @@
         jump: DROP
       become: yes
 ```
-In this playbook:
-- The playbook is named "SQL Injection Attack | 192.155.88.231" to indicate the type of attack and the attacker's IP address.
-- It targets the "servers
