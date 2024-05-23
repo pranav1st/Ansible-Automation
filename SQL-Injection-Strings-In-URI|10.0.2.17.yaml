@@ -1,16 +1,16 @@
-
-- name: SQL-Injection-Strings-In-URI
-  hosts: servers
-  become: yes
-  tasks:
-    - name: Block SQL Injection Strings in URI
-      uri:
-        url: "http://example.com/api/{{ item }}"
-        method: GET
-        status_code: 200
-        return_content: yes
-      with_items:
-        - "user?id=1"
-        - "user?id=1' OR '1'='1"
-        - "user?id=1; DROP TABLE users"
-      ignore_errors: yes
+---
+  ---
+  - name: SQL Injection Strings In URI Attack Response | 10.0.2.17
+    hosts: servers
+    become: yes
+    tasks:
+      - name: Remove SQL Injection Strings from URI
+        blockinfile:
+          path: /path/to/your/web/application
+          block: |
+            location / {
+                # Add your web application configuration here
+                # Remove any SQL injection strings from the URI
+            }
+        become: yes
+  
