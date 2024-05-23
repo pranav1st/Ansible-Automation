@@ -1,0 +1,10 @@
+ name: SQL Injection Attack | 192.155.88.231
+  hosts: servers
+  become: yes
+  tasks:
+    - name: Block IP Address at Firewall Level
+      ansible.builtin.iptables:
+        chain: INPUT
+        source: 192.155.88.231
+        jump: DROP
+      become: yes
