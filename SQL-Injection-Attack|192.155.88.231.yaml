@@ -9,5 +9,3 @@ tasks:
       source: 192.155.88.231
       jump: DROP
     become: yes
-```
-This playbook will drop all incoming traffic from the specified IP address at the firewall level.
