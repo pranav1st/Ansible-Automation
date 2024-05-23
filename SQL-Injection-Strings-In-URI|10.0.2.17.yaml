@@ -1,0 +1,10 @@
+---
+- name: SQL Injection Strings In URI | 10.0.2.17
+  hosts: servers
+  become: yes
+  tasks:
+    - name: Block IP Address at Firewall Level
+      iptables:
+        chain: INPUT
+        source: 10.0.2.17
+        jump: DROP
