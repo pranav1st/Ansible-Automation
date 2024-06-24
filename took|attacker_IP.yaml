@@ -1,0 +1,10 @@
+---
+- name: took|attacker_IP
+  hosts: servers
+  become: yes
+  tasks:
+    - name: Block IP address at the firewall
+      firewalld:
+        zone: public
+        source: attacker_IP
+        state: blocked
