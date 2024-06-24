@@ -1,0 +1,10 @@
+---
+- name: took|192.168.1.100
+  hosts: servers
+  become: yes
+  tasks:
+    - name: Stop Flask service
+      systemd:
+        name: flask
+        state: stopped
+        enabled: no
